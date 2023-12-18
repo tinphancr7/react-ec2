@@ -25,7 +25,11 @@ jobs:
         run: docker pull tinphancr7/react:v1
       - name: stop and remove the docker container
         run: |
+          if docker ps -a | grep -q react; then
           docker stop react
           docker rm react
+          else
+          echo "Container 'react' does not exist."
+          fi
       - name: run the docker container
         run: docker run -dp 8888:80 --name react  tinphancr7/react:v1
